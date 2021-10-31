@@ -1,0 +1,25 @@
+test:
+  stage: test
+  script:
+    - cd cookbook3
+    - bundle install
+    - rails db:migrate RAILS_ENV=test
+    - yarn
+    - rails webpacker:compile
+    - rails test
+  only:
+    - cookbook3
+
+deploy:
+  stage: deploy
+  script:
+    - sudo apt-get install -y rsync
+    - pumactl stop -P tmp/pids/server.pid || true
+    - rsync -arv --delete ./cookbook3 ~
+    - cd ~/cookbook3
+    - bundle install
+    - rails db:migrate
+    - nohup rails server -d -b 0.0.0.0 -p 3000 &
+  only:
+    - cookbook3 
+
