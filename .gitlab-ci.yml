@@ -19,7 +19,7 @@ deploy:
     - cd ~/cookbook3
     - bundle install
     - rails db:migrate
-    - nohup rails server -d -b 0.0.0.0 -p 3000 &
+    - rails server -d -b 0.0.0.0 -p 3000
   only:
     - cookbook3 
 
