@@ -1,0 +1,9 @@
+<h1><%= @blog.title %></h1>
+
+<pre><%= @blog.content %></pre>
+
+<h1>New Comment</h1>
+
+<%= render 'form', comment: @comment %>
+
+<%= link_to 'Back', blog_path(@blog) %>

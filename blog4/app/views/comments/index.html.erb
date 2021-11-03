@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1><%= @blog.title %></h1>
+
+<pre><%= @blog.content %></pre>
+
+<h1>Comments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Blog</th>
+      <th>Content</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @comments.each do |comment| %>
+      <tr>
+        <td><%= comment.blog_id %></td>
+        <td><%= comment.content %></td>
+        <td><%= link_to 'Show', blog_comment_path(@blog.id, comment.id) %></td>
+        <td><%= link_to 'Edit', edit_blog_comment_path(@blog,comment) %></td>
+        <td><%= link_to 'Destroy', blog_comment_path(@blog,comment), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Comment', new_blog_comment_path(@blog) %>

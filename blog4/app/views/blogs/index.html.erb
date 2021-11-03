@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Blogs</h1>
+
+<div class="blogs">
+  <% @blogs.each do |blog| %>
+    <div class="blog">
+        <h3> <%= link_to blog.title, blog %> </h3>
+          Posted <%= time_ago_in_words blog.created_at %> ago
+          | <%= link_to 'Edit',edit_blog_path(blog) %>
+          | <%= link_to 'Destroy',blog, data:{confirm:'Are you sure ? '}, method: :delete %>
+        <pre><%= blog.content %></pre>
+    </div>
+  <% end %>
+</div>
+
+<br>
+
+<%= link_to 'New Blog', new_blog_path %>

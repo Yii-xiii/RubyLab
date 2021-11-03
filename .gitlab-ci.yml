@@ -1,0 +1,26 @@
+test:
+  stage: test
+  script:
+    - cd blog4
+    - bundle install
+    - rails db:migrate RAILS_ENV=test
+    - yarn
+    - rails webpacker:compile
+    - PARALLE_WORKERS=1 rails test
+  only:
+    - blog4
+
+deploy:
+  stage: deploy
+  script:
+    - pumactl stop -P ~/blog4/tmp/pids/server.pid || true
+    - rsync -arv --delete ./blog4 ~
+    - cd ~/blog4
+    - bundle install
+    - rails db:migrate
+    - yarn
+    - rails webpacker:compile
+    - rails server -d -b 0.0.0.0 -p 4000
+  only:
+    - blog4
+
