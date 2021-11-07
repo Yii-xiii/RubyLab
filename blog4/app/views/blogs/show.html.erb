@@ -1,17 +1,41 @@
 <p id="notice"><%= notice %></p>
 
-<p>
+<h1 style="font-family: cursive;">
   <strong>Title:</strong>
   <%= @blog.title %>
-</p>
+</h1>
 
-<p>
+<p style="font-style:italic; font-size:12px; color: #999">
+  <strong style="text-decoration: underline;">Written by:</strong>
+  <span style="text-decoration: underline;"> <%= User.find(@blog.user_id).email %> </span>
+
+  <% if user_signed_in? && current_user != @blog.user %>
+    <% @f = Followship.find_by(user_id: current_user.id, following_user_id: @blog.user_id) %>
+
+    <% if @f.nil? %>
+      <% @f = Followship.new %>
+      <button type="button" style="font-size: 10px; background-color: limegreen; border-color: limegreen; border-radius: 5px; margin: 10px;"><%= link_to "Follow", users_follow_path(user: current_user, blog:@blog) %></button> 
+    <% else %>
+      <button type="button" style="font-size: 10px; background-color: red; border-color: red; border-radius: 5px; margin: 10px;"><%= link_to "Unfollow", users_unfollow_path(user: current_user, blog:@blog), style:"color: black;" %></button>
+    <% end %>
+  <% elsif user_signed_in? == false %>
+    <button type="button" style="font-size: 10px; background-color: limegreen; border-color: limegreen; border-radius: 5px; margin: 10px;" > <%= link_to "Follow", new_user_session_path %></button>
+  <% end %>
+
+</p>
+<div>
   <strong>Content:</strong>
-  <%= @blog.content %>
-</p>
+  <p style="background-color: #eee; padding: 20px;">
+    <%= @blog.content %>
+  </p>
+</div>
 
+<br>
 <%= link_to 'Edit', edit_blog_path(@blog) %> |
 <%= link_to 'Back', blogs_path %>
+<br>
+<br>
+<br>
 
 <h2>Comments</h2>
 <div id="comments">

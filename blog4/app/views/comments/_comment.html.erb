@@ -1,9 +1,11 @@
-<div id="comment_<%=comment.id%>">
+<div id="comment_<%=comment.id%>" style="border-style: hidden hidden solid hidden; border-color: #eee; ">
 	<p>
-		<strong>
+		<strong style="color: #999;">
 			Posted <%= time_ago_in_words(comment.created_at) %>
+			by 
+			<span style="font-style: italic;"> <%= User.find(comment.user_id).email %></span>
 		</strong>
 		<br>
-		<%= comment.content %>
+		<p style="font-family: sans-serif;"> <%= comment.content %></p>
 	</p>
 </div>

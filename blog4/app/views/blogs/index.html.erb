@@ -1,15 +1,20 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Blogs</h1>
+<div style="padding-left:15px; color: darkcyan;">
+  <h1>BLOGS :</h1>
+</div>
 
-<div class="blogs">
+<div class="blogs" style="width: 100%;" >
   <% @blogs.each do |blog| %>
-    <div class="blog">
-        <h3> <%= link_to blog.title, blog %> </h3>
-          Posted <%= time_ago_in_words blog.created_at %> ago
+    <div class="blog" style="padding: 20px; width: 100%; border-style: hidden hidden solid hidden; border-color: lightblue;">
+        <h3 style="font-family: monospace;"> <%= link_to blog.title, blog %> </h3>
+        <p style="font-style: italic; color: #999; font-size: 12px;">
+          Posted <%= time_ago_in_words blog.created_at %> ago by 
+          <%= User.find(blog.user_id).email %>
           | <%= link_to 'Edit',edit_blog_path(blog) %>
           | <%= link_to 'Destroy',blog, data:{confirm:'Are you sure ? '}, method: :delete %>
-        <pre><%= blog.content %></pre>
+        </p>
+        <div style="background-color: #eee; padding: 10px;"><%= blog.content %></div>
     </div>
   <% end %>
 </div>

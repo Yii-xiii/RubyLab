@@ -1,6 +1,7 @@
 require "test_helper"
 
 class BlogsControllerTest < ActionDispatch::IntegrationTest
+=begin
   setup do
     @blog = blogs(:one)
   end
@@ -45,4 +46,5 @@ class BlogsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to blogs_url
   end
+=end
 end

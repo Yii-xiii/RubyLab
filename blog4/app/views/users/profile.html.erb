@@ -1,0 +1,17 @@
+<h1>Profile</h1>
+
+<div style="padding: 20px">
+	<strong>Email:</strong>
+	<%= current_user.email %>
+</div>
+
+<div style="padding: 20px">
+	<strong>Follower:</strong>
+	<%= (Followship.where(following_user_id: current_user.id).collect{|followship| User.find(followship.user_id).email}).join(",") %>
+</div>
+
+<div style="padding: 20px">
+	<strong>Following:</strong>
+	<%= (Followship.where(user_id: current_user.id).collect{|followship| User.find(followship.following_user_id).email}).join(",") %>
+</div>
+

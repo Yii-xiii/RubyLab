@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
   before_action :set_comment, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ new create ]
+  before_action :correct_user , only: %i[ edit update destroy ]
 
   # GET /comments or /comments.json
   def index
@@ -28,6 +30,7 @@ class CommentsController < ApplicationController
     @blog = Blog.find(params[:blog_id])
     @comment = Comment.new(comment_params)
     @comment.blog = @blog
+    @comment.user = current_user
 
     respond_to do |format|
       if @comment.save
@@ -68,6 +71,15 @@ class CommentsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
       @comment = Comment.find(params[:id])
+      @blog = Blog.find(id: @comment.blog_id)
+    end
+
+    def correct_user
+      set_comment
+      @user = User.find(@comment.user_id)
+      if @user.nil? || current_user != @user
+        redirect_to blog_path(@blog), notice:"You are not allowed to edit this comment!"
+      end
     end
 
     # Only allow a list of trusted parameters through.

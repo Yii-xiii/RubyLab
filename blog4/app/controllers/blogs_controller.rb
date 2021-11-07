@@ -1,5 +1,7 @@
 class BlogsController < ApplicationController
   before_action :set_blog, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ new create ]
+  before_action :correct_user , only: %i[ edit update destroy ]
 
   # GET /blogs or /blogs.json
   def index
@@ -14,12 +16,10 @@ class BlogsController < ApplicationController
   def new
     @blog = Blog.new
 
-
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @blog }
     end
-
   end
 
   # GET /blogs/1/edit
@@ -29,6 +29,7 @@ class BlogsController < ApplicationController
   # POST /blogs or /blogs.json
   def create
     @blog = Blog.new(blog_params)
+    @blog.user = current_user
 
     respond_to do |format|
       if @blog.save
@@ -67,6 +68,14 @@ class BlogsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
       @blog = Blog.find(params[:id])
+    end
+
+    def correct_user
+      set_blog
+      @user = User.find(@blog.user_id)
+      if @user.nil? || current_user != @user
+        redirect_to blogs_path, notice:"You are not allowed to edit this blog!"
+      end
     end
 
     # Only allow a list of trusted parameters through.

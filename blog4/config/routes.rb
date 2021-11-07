@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'users/profile'
+  get 'users/follow'
+  get 'users/unfollow'
+  devise_for :users
   #resources :comments
   resources :blogs do
     resources :comments

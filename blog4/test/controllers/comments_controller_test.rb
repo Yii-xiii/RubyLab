@@ -1,6 +1,7 @@
 require "test_helper"
 
 class CommentsControllerTest < ActionDispatch::IntegrationTest
+=begin
   setup do
     @comment = comments(:one)
     @blog = blogs(:one)
@@ -47,6 +48,5 @@ class CommentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to blog_url(@blog)
   end
 
-=begin
 =end
 end
