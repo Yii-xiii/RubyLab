@@ -1,0 +1,11 @@
+# Ignore all logfiles and tempfiles.
+/blog4/log/*
+/blog4/tmp/*
+!/blog4/log/.keep
+!/blog4/tmp/.keep
+
+# Ignore pidfiles, but keep the directory.
+/blog4/tmp/pids/*
+!/blog4/tmp/pids/
+!/blog4/tmp/pids/.keep
+
