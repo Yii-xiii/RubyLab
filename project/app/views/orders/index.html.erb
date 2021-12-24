@@ -1,0 +1,50 @@
+<h1>Orders</h1>
+
+    <% @orders.each do |order| %>
+        <div class="order">
+
+          <div class="order-details">  
+            <div class="order-detail" style="font-weight: 1000; font-size:25px;">
+              <a href="/orders/<%= order.id%>" style="text-decoration:none; color:navy;">
+              <%= order.customer.email %>
+              </a>
+            </div>
+
+            <div class="order-detail" >
+              <%= order.address %>
+            </div>
+
+            <div class="order-detail" >
+              <%= order.phone_number %>
+            </div>
+
+            <div class="order-detail" >
+              <%= order.postcode %>
+            </div>
+          </div>
+
+          <div class="order-right-margin">
+              <% if order.Paid? %>
+                <button class="order-delivered">
+                  Delivered
+                </button>
+              <% elsif order.Delivered? %>
+                <button class="order-delivered">
+                  Received
+                </button>
+              <% elsif order.Cancel? %>
+                <button class="order-delete">
+                  Delete
+                </button>
+              <% end %>
+
+              <% if order.customer_id == current_user.id %>
+                <button class="order-cancel">
+                  Cancel
+                </button>
+              <% end %>
+          </div>
+        </div>
+    <% end %>
+
+<br>

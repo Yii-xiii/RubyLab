@@ -1,0 +1,52 @@
+// Place all the styles related to the collections controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+
+div.collection {
+    margin: 3%;
+    display:flex;
+    flex-direction:row;
+    border-radius: 10px;
+    background-color: whitesmoke;
+    padding: 15px;
+    height:230px;
+}
+
+div.collection-details {
+    display:flex;
+    flex-direction:column;
+    width: 70%;
+    padding: 10px;
+}
+
+div.collection-detail {
+    padding: 1%;
+}
+
+div.collection-quantity-row {
+    display:flex; 
+    flex-direction:row;
+}
+
+div.collection-quantity {
+    background-color:white; 
+    border-radius:5px; 
+    width: 35px; 
+    text-align:center;
+    margin:2px 5px;
+    padding:2px;
+}
+
+div.collection-image {
+    border-radius: 10px;
+    width:200px;
+    height:200px;
+    overflow:hidden;
+}
+
+div.collection-delete{
+    margin:auto;
+    width:15%;
+    text-align: right;
+}

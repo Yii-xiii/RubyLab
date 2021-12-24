@@ -1,0 +1,75 @@
+<div class="form">
+<%= form_with(model: order) do |form| %>
+  <% if order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+
+      <ul>
+        <% order.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.hidden_field :customer_id, value:current_user.id %>
+    <%= form.hidden_field :status, value: :Paid %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :address %>
+    <%= form.text_area :address %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :phone_number %>
+    <%= form.text_field :phone_number %>
+  </div>
+
+  <div class="form-field">
+    <%= form.label :postcode %>
+    <%= form.text_field :postcode %>
+  </div>
+
+  <div>
+    <%= form.hidden_field :product_id, value: params[:order][:product_id] %> 
+    <%= form.hidden_field :spec_id, value: params[:order][:spec_id] %> 
+    <%= form.hidden_field :quantity, value: params[:order][:quantity] %> 
+    <%= form.hidden_field :amount, value: params[:order][:amount] %> 
+  </div>
+
+  <div class="order-product-box">
+    <% @product = Product.find(params[:order][:product_id]) %>
+    <% @spec = Spec.find(params[:order][:spec_id]) %>
+    <div>
+          <%= image_tag(@product.image, :width =>150) %>
+    </div>
+    <div>
+      <div>
+        <%= @product.title %>
+      </div>
+      <div>
+        <%= @spec.title %>
+      </div>
+      <div>
+        x
+        <%= params[:order][:quantity] %>
+      </div>
+      <div>
+        Total : 
+        <%= params[:order][:amount] %>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+</div>

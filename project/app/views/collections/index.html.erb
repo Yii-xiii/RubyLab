@@ -1,0 +1,33 @@
+<h1>Collections</h1>
+
+    <% @collections.each do |collection| %>
+        <% @product = Product.find(collection.product_id) %>
+
+        <div class="collection">
+          <div class="collection-image">
+            <%= image_tag(@product.image, :gravity =>"center", :height =>200 , :weight => 200, :crop=>"fill") %> 
+          </div>
+
+          <div class="collection-details">
+            <div class="collection-detail" style="font-weight: 1000; font-size:20px;">
+              <%= @product.title %>
+            </div>
+        
+            <div class="collection-detail" style="color:grey; font-style:Italic;">
+              <%= @product.description %>
+            </div>
+
+            <div class="collection-detail">
+              Price : <%= collection.product.price %>
+            </div>
+          </div>
+
+          <div class="collection-delete"'>
+            <button class="delete">
+              <%= link_to 'Delete', collection, method: :delete, data: { confirm: 'Are you sure?' }, style:'color:white; text-decoration:none;' %>
+            </button>
+          </div>
+        </div>
+    <% end %>
+
+<br>

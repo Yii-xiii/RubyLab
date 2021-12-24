@@ -1,0 +1,19 @@
+// Place all the styles related to the specs controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+div.form {
+    display:block; 
+    border-radius: 50px; 
+    border-style: solid; 
+    width:70%; 
+    margin-left:15%; 
+    padding:2%;
+}
+
+div.form-field {
+    margin:15px; 
+    display:flex; 
+    flex-direction:column; 
+    border-radius: 10px;
+}

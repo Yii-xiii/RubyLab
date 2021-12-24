@@ -1,0 +1,70 @@
+<div class="product-showbox">
+  <div class="product-image">
+    <%= image_tag(@product.image, :gravity =>"center", :height =>300 , :weight => 250, :crop=>"fill") %> 
+  </div>
+
+  <div class="product-detail">
+    <p>
+      <strong>Title:</strong>
+      <%= @product.title %>
+    </p>
+
+    <p>
+      <strong>Description:</strong>
+      <%= @product.description %>
+    </p>
+
+    <p>
+      <strong>Price:</strong>
+      <%= @product.price %>
+    </p>
+
+    <p>
+      <strong>Sold:</strong>
+      <%= @product.sold %>
+    </p>
+
+    <%= form_with url:product_do_path, method: :get do |form| %>
+      <div class="product-specs">
+        <% @specs.each do |spec, index| %>
+          <input class="product-spec btn-check" type="radio" name="spec_id" id=<%= spec.id %> value=<%= spec.id %> required>
+            <label class="btn product-spec" for=<%= spec.id %>>
+              <%= spec.title %>
+            </label>
+          </input>
+        <% end %>
+      </div>
+
+      <div>
+          <input name="quantity" min="1" max="100" step="1" value="1" type="number" class="form-control" style="width:100px; margin:5px">
+      </div>
+      
+      <input type="hidden" name="product_id" value=<%= @product.id%> >
+      <div class="product-button-row">
+        <div class="actions" style="margin:2px;">
+          <input type="submit" name="commit" value="Add to Cart" label="Add to Cart" style='background-color: rgb(255, 159, 143); margin:5px; padding: 5px; border-radius: 10px; font-size: 13px; color: white;width: 100px;' >
+        </div>
+
+        <div class="actions" style="margin:2px;">
+          <%= form.submit "Buy Now", style:'background-color: rgb(255, 159, 143); margin:5px; padding: 5px; border-radius: 10px; font-size: 13px; color: white; width: 100px;' %>
+        </div>
+      </div>
+
+      <div class="product-button-row">
+      <% if user_signed_in? %>
+        <button class="product-addCollection">
+          <%= link_to 'Add to Collection', collections_path(collection: {user_id: current_user.id, product_id: @product.id}), method: :post, style:'text-decoration:none; color:black'%> 
+        </button>
+      <% end %>
+      </div>
+    <% end %>
+
+    <div>
+      <button class="btn product-edit">
+        <%= link_to 'Edit', edit_product_path(@product), style:'text-decoration:none; color:white;' %> 
+      </button>
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,32 @@
+<div class="form">
+  <%= form_with(model: product) do |form| %>
+
+    <div class="form-field">
+      <%= form.hidden_field :seller_id, value:current_user.id %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :title %>
+      <%= form.text_field :title, style: 'border-radius: 5px; padding:3px;', :required => true %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :description %>
+      <%= form.text_area :description, style: 'border-radius: 5px; padding:3px;', :required => true %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label :price %>
+      <%= form.text_field :price, style: 'border-radius: 5px; padding:3px;', :required => true %>
+    </div>
+
+    <div class="form-field">
+      <%= form.label "Choose an image" %>
+      <%= form.file_field :image, style:'border-radius: 5px; margin:10px;', :required => true %>
+    </div>
+
+    <div class="actions" style="margin:30px;">
+      <%= form.submit :Submit, style:'border-radius: 5px; height: 40px; width: 80%; margin-left: 10%;' %>
+    </div>
+  <% end %>
+</div>
