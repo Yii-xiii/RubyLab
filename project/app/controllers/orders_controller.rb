@@ -31,13 +31,25 @@ class OrdersController < ApplicationController
 
     respond_to do |format|
       if @order.save
-        @productOrder = @order.productOrders.new()
-        @productOrder.order = @order
-        @productOrder.product_id = params[:order][:product_id]
-        @productOrder.spec_id = params[:order][:spec_id]
-        @productOrder.quantity = params[:order][:quantity]
-        @productOrder.amount = params[:order][:amount]
-        @productOrder.save!
+        @items = params[:items]
+        @items.each do |item|
+          @item = JSON.parse(item)
+          @spec = Spec.find(@item["spec_id"])
+          @product = Product.find(@spec.product_id)
+
+          if @item["cart_id"] 
+            @cart = Cart.find(@item["cart_id"])
+            @cart.destroy
+          end
+
+          @productOrder = @order.productOrders.new()
+          @productOrder.order = @order
+          @productOrder.spec_id = @spec.id
+          @productOrder.product_id = @product.id
+          @productOrder.quantity = @item["quantity"]
+          @productOrder.amount = @item["quantity"].to_i * @product.price
+          @productOrder.save!
+        end
         format.html { redirect_to @order, notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }
       else

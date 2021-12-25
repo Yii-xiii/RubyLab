@@ -1,5 +1,5 @@
 class CartsController < ApplicationController
-  before_action :authenticate_user!, only: %i[index show edit update destroy create]
+  before_action :authenticate_user!, only: %i[index show edit update destroy create create_order]
   before_action :set_cart, only: %i[ show edit update destroy]
 
   # GET /carts or /carts.json
@@ -61,6 +61,18 @@ class CartsController < ApplicationController
     #   format.html { redirect_to carts_url, notice: "Cart was successfully destroyed." }
     #   format.json { head :no_content }
     # end
+  end
+
+  def create_order
+    puts params
+    @carts = current_user.carts.all
+    @items = []
+    @carts.each do |cart|
+      if params[cart.id.to_s] == "on"
+        @items += [{cart_id: cart.id, quantity: cart.quantity, spec_id: cart.spec_id}]
+      end
+    end
+    redirect_to new_order_path(items: @items)
   end
 
   private

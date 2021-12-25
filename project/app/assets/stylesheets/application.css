@@ -49,11 +49,20 @@ button.back {
       padding: 10px;
       border-radius: 8px;
 }
-  
+
 .header {
+    font-family: Playfair;
+    margin:0 3%;
+    font-size: 50px;
+    font-weight:600;
+}
+
+.header-form {
       font-family: Playfair;
+      text-align: center;
       margin:20px;
-      weight:600px;
+      font-size: 50px;
+      font-weight:600;
 }
   
 link {
@@ -65,8 +74,8 @@ button.delete{
     background-color: rgb(224, 63, 22);
     border-radius: 8px;
     padding: 4px;
-    margin-top:80%;
-    margin-right:15px;
+    margin: auto;
+    width: 50%;
 }
 
 button.add-by-one{

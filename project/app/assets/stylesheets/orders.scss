@@ -6,10 +6,24 @@ div.order-product-box {
     display: flex;
     flex-direction: row;
     width: 95%;
-    margin:auto;
+    margin: 10px auto;
     padding:10px;
     border-radius: 8px;
-    background-color: rgb(222, 222, 222);
+    background-color: rgb(233, 233, 233);
+}
+
+div.order-product-detail-box {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin: 0 10px;
+}
+
+div.order-product-quantity-box {
+    margin: auto;
+    padding:10px;
+    font-style:Italic;
+    font-size:20px;
 }
 
 div.order-show-box {
@@ -24,6 +38,8 @@ div.order-customer-details {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width:95%;
+    margin:auto;
 }
 
 div.order {

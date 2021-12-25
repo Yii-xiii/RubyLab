@@ -37,39 +37,41 @@
     <%= form.text_field :postcode %>
   </div>
 
-  <div>
-    <%= form.hidden_field :product_id, value: params[:order][:product_id] %> 
-    <%= form.hidden_field :spec_id, value: params[:order][:spec_id] %> 
-    <%= form.hidden_field :quantity, value: params[:order][:quantity] %> 
-    <%= form.hidden_field :amount, value: params[:order][:amount] %> 
-  </div>
-
+  <% params[:items].each do |item, index| %>
+  
+  <input type="hidden" name="items[]" value=<%= item.to_json %> />
+    
   <div class="order-product-box">
-    <% @product = Product.find(params[:order][:product_id]) %>
-    <% @spec = Spec.find(params[:order][:spec_id]) %>
+    <% @spec = Spec.find(item[:spec_id]) %>
+    <% @product = Product.find(@spec.product_id) %>
     <div>
           <%= image_tag(@product.image, :width =>150) %>
     </div>
-    <div>
-      <div>
-        <%= @product.title %>
+    <div class="order-product-detail-box">
+      <div style="font-size:25px; font-family:serif; margin:3px; color:rgb(71, 64, 64);">
+        <strong> <%= @product.title %> </strong>
+        <hr style="width:80%; margin:0;">
       </div>
-      <div>
+      <div style="margin:10px;">
         <%= @spec.title %>
       </div>
-      <div>
-        x
-        <%= params[:order][:quantity] %>
-      </div>
-      <div>
-        Total : 
-        <%= params[:order][:amount] %>
+      <div style="margin:10px;">
+      <strong>
+        Total : $
+        <%= (item[:quantity].to_i * @product.price).to_s(:delimited) %>
+        </strong>
       </div>
     </div>
+
+    <div class="order-product-quantity-box">
+      x
+      <%= item[:quantity] %>
+    </div>
   </div>
+  <% end %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit "Pay Now", style:'border-radius: 5px; height: 40px; width: 80%; margin-left: 10%; background-color:rgb(243, 92, 54);'  %>
   </div>
 <% end %>
 </div>

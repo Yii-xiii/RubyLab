@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  get "products/do" => "products#do"
+  get "carts/create_order"
+  
   resources :product_orders
   resources :orders
   resources :collections
@@ -14,5 +17,4 @@ Rails.application.routes.draw do
 
   root "products#index"
 
-  get "product/do" => "products#do"
 end

@@ -39,26 +39,40 @@
     <div>
       <%= image_tag(productOrder.product.image, :width =>150) %>
     </div>
-    <div>
-      <div>
-        <%= productOrder.product.title %>
+    <div class="order-product-detail-box">
+      <div style="font-size:25px; font-family:serif; margin:3px; color:rgb(71, 64, 64);">
+        <strong> <%= productOrder.product.title %> </strong>
+        <hr style="width:80%; margin:0;">
       </div>
-      <div>
+      <div style="margin:10px;">
         <%= productOrder.spec.title %>
       </div>
-      <div>
-        x <%= productOrder.quantity %>
+      <div style="margin:10px;">
+        <strong>
+          Total : $
+          <%= productOrder.amount.to_s(:delimited) %>
+        </strong>
       </div>
+    </div>
+    <div class="order-product-quantity-box">
+      x <%= productOrder.quantity %>
     </div>
     </div>
     <% end %>
   </div>
 
+  <% if current_user.seller? && @order.Paid? %>
   <button style="background-color:rgba(230, 19, 19, 0.829); width:45%; margin:2.4%; padding:3px; border-radius:10px; color:white;">
-    Delivered
+    <%= link_to "Delivered", order_path(order: {order_id:@order.id, status: :Delivering}), method: :patch, style:'color:white; text-decoration:none;' %>
   </button>
   <button style="background-color:black; width:45%; margin:2.4%; padding:3px; border-radius:10px;">
-    <%= link_to 'Go Back', orders_path, style:'color:white; background-color:black; text-decoration:none;'  %>
+    <%= link_to 'Go Back', orders_path, style:'color:white; text-decoration:none;'  %>
   </button>
+  <% else %>
+  <button style="background-color:black; width:50%; margin:0 25%; padding:3px; border-radius:10px;">
+    <%= link_to 'Go Back', orders_path, style:'color:white; text-decoration:none;'  %>
+  </button>
+  <% end %>
+
 </div>
 

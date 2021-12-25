@@ -26,7 +26,7 @@ class SpecsController < ApplicationController
 
     # respond_to do |format|
       if @spec.save
-        redirect_to product_spec_path(@product,@spec), notice: "Spec was successfully created."
+        redirect_to product_path(@product), notice: "Spec was successfully created."
         # format.html { redirect_to @spec, notice: "Spec was successfully created." }
         # format.json { render :show, status: :created, location: @spec }
       else
@@ -40,7 +40,7 @@ class SpecsController < ApplicationController
   def update
     # respond_to do |format|
       if @spec.update(spec_params)
-        redirect_to product_spec_path(@product,@spec), notice: "Spec was successfully updated."
+        redirect_to product_path(@product), notice: "Spec was successfully updated."
         # format.html { redirect_to @spec, notice: "Spec was successfully updated." }
         # format.json { render :show, status: :ok, location: @spec }
       else
@@ -53,7 +53,7 @@ class SpecsController < ApplicationController
   # DELETE /specs/1 or /specs/1.json
   def destroy
     @spec.destroy
-    redirect_to product_specs_path(@product), notice: "Spec was successfully destroyed."
+    redirect_to product_path(@product), notice: "Spec was successfully destroyed."
     # respond_to do |format|
     #   format.html { redirect_to specs_url, notice: "Spec was successfully destroyed." }
     #   format.json { head :no_content }

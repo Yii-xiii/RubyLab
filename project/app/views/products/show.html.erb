@@ -4,67 +4,95 @@
   </div>
 
   <div class="product-detail">
+    <p style="font-size:30px; font-family:serif; font-weight:600;">
+      <strong><%= @product.title %></strong>
+    </p>
+    <hr style="width:80%">
+
     <p>
-      <strong>Title:</strong>
-      <%= @product.title %>
+    <div style="width:80%;">
+      <strong style="font-size:18px;">Description:</strong>
+      <br>
+      <span style="font-style:Italic;">
+        <%= @product.description %>
+      </span>
+    </div>
     </p>
 
     <p>
-      <strong>Description:</strong>
-      <%= @product.description %>
+      <strong style="font-size:18px;">Price: <br>$</strong>
+      <%= @product.price.to_s(:delimited) %>
     </p>
 
     <p>
-      <strong>Price:</strong>
-      <%= @product.price %>
+      <strong style="font-size:18px;">Sold: <br> x</strong>
+        <%= @product.sold %>
     </p>
 
-    <p>
-      <strong>Sold:</strong>
-      <%= @product.sold %>
-    </p>
-
-    <%= form_with url:product_do_path, method: :get do |form| %>
+    <%= form_with url:products_do_path, method: :get do |form| %>
       <div class="product-specs">
         <% @specs.each do |spec, index| %>
           <input class="product-spec btn-check" type="radio" name="spec_id" id=<%= spec.id %> value=<%= spec.id %> required>
-            <label class="btn product-spec" for=<%= spec.id %>>
+            <label class="btn product-spec" style="margin:3px;padding:5px;min-width:70px;" for=<%= spec.id %>>
               <%= spec.title %>
             </label>
-          </input>
+            <% if user_signed_in? && current_user.seller? %>
+              <button type="button" class="minus-by-one" style="margin:auto 20px auto 2px;">
+                <%= link_to '-', product_spec_path(@product,spec), method: :delete, data:{confirm: "Are you sure ? "}, style:'text-decoration:none; color:black;' %>
+              </button>
+            <% end %>
         <% end %>
       </div>
 
+        <br>
+      
+      <% if user_signed_in? == false || current_user.customer? %>
       <div>
-          <input name="quantity" min="1" max="100" step="1" value="1" type="number" class="form-control" style="width:100px; margin:5px">
+          <input name="quantity" min="1" max="100" step="1" value="1" type="text" autocomplete="off" class="form-control" style="width:100px; margin:10px 20px; webkit-appearance: none;">
       </div>
       
       <input type="hidden" name="product_id" value=<%= @product.id%> >
       <div class="product-button-row">
         <div class="actions" style="margin:2px;">
-          <input type="submit" name="commit" value="Add to Cart" label="Add to Cart" style='background-color: rgb(255, 159, 143); margin:5px; padding: 5px; border-radius: 10px; font-size: 13px; color: white;width: 100px;' >
+          <input type="submit" name="commit" value="Add to Cart" label="Add to Cart" style='background-color: rgb(255, 159, 143); margin:5px; padding: 5px; border-radius: 10px; color: white;width: 150px;' >
         </div>
 
         <div class="actions" style="margin:2px;">
-          <%= form.submit "Buy Now", style:'background-color: rgb(255, 159, 143); margin:5px; padding: 5px; border-radius: 10px; font-size: 13px; color: white; width: 100px;' %>
+          <%= form.submit "Buy Now", style:'background-color: rgb(255, 159, 143); margin:5px; padding: 5px; border-radius: 10px; color: white; width: 150px;' %>
         </div>
       </div>
 
+    <% end %>
+
       <div class="product-button-row">
-      <% if user_signed_in? %>
+      <% if user_signed_in? && current_user.customer? %>
         <button class="product-addCollection">
-          <%= link_to 'Add to Collection', collections_path(collection: {user_id: current_user.id, product_id: @product.id}), method: :post, style:'text-decoration:none; color:black'%> 
+          <%= link_to 'Add to Collection', collections_path(collection: {user_id: current_user.id, product_id: @product.id}), method: :post, style:'text-decoration:none; color:black; margin:auto;'%> 
         </button>
       <% end %>
       </div>
     <% end %>
 
-    <div>
-      <button class="btn product-edit">
-        <%= link_to 'Edit', edit_product_path(@product), style:'text-decoration:none; color:white;' %> 
-      </button>
-    </div>
-  </div>
+    <% if user_signed_in? && current_user.seller? %>
+      <div>
+        <button class="product-addSpec">
+          <%= link_to 'Add Spec', new_product_spec_path(@product), style:'text-decoration:none; color:white; margin:auto;' %> 
+        </button>
+      </div>
 
+      <div>
+        <button class="product-edit">
+          <%= link_to 'Edit Product', edit_product_path(@product), style:'text-decoration:none; color:white; margin:auto;' %> 
+        </button>
+      </div>
+    <% end %>
+  </div>
 </div>
 
+<hr style="width:90%; margin:20px auto;">
+
+<div style="width:85%; margin:auto;">
+<h1 class="header" style="">Comment</h1>
+<div style="background-color:gainsboro; border-radius:8px;padding:10px; margin:20px 0 100px 0;">
+          No comment yet.
+<div>

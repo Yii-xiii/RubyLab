@@ -1,9 +1,14 @@
-<h1>Carts</h1>
+<h1 class="header">Carts</h1>
 
+  <%= form_with url:carts_create_order_path, method: :get do |form| %>
     <% @carts.each do |cart| %>
         <% @product = Product.find(cart.product_id) %>
 
         <div class="cart">
+          <div style="margin:auto 10px;">
+            <input type="checkbox" name="<%= cart.id %>">
+          </div>
+
           <div class="cart-image">
             <%= image_tag(@product.image, :gravity =>"center", :height =>200 , :weight => 200, :crop=>"fill") %> 
           </div>
@@ -18,12 +23,16 @@
               </div>
             </div>
 
+            <div class="cart-detail" style="font-style:Italic; font-weight:500;">
+              $ <%= cart.product.price %>
+            </div>
+
 
             <div class="cart-detail">
               Quantity : 
               <div class="cart-quantity-row">
                 <div style="width:20px;">
-                  <button class='minus-by-one'>
+                  <button type="button" class='minus-by-one'>
                     <%= link_to '-', cart_path(cart, cart:{quantity: (cart.quantity-1), amount: ((cart.quantity-1) * @product.price)}), method: :put, style:'color:black; text-decoration:none;'  %>
                   </button>
                 </div>
@@ -33,24 +42,29 @@
                 </div>
 
                 <div style="width:20px;">
-                  <button class="add-by-one">
+                  <button type="button" class="add-by-one">
                     <%= link_to '+', cart_path(cart, cart:{quantity: (cart.quantity+1), amount: ((cart.quantity+1) * @product.price)}), method: :put, style:'color:black; text-decoration:none;'  %>
                   </button>
                 </div>
               </div>
             </div>
-
-            <div class="cart-detail">
-              Price : <%= cart.amount %>
-            </div>
           </div>
 
-          <div class="cart-delete"'>
-            <button class="delete">
+          <div class="cart-right">
+            <div style="margin-bottom:50%; width:100%;">
+              <div style="font-size:20px; font-weight:600; font-style:Italic;">
+                $ <%= cart.amount %>
+              </div>
+            </div>
+            <button type="button" class="delete">
               <%= link_to 'Delete', cart, method: :delete, data: { confirm: 'Are you sure?' }, style:'color:white; text-decoration:none;' %>
             </button>
           </div>
         </div>
     <% end %>
+        <div class="actions" style="margin:2px; width: 90%; text-align:right;">
+          <%= form.submit "Buy Now", style:'background-color: rgb(52, 147, 255); margin:10px; padding: 5px; border-radius: 10px; color: black; width: 40%;' %>
+        </div>
+  <% end %>
 
 <br>

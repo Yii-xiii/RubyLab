@@ -15,11 +15,13 @@
       </ul>
         
       <ul class="navbar-nav navbar-expand-lg mr-auto">
-        <li class="nav-item">
-          <div class="nav-link">
-            <%= link_to 'Carts', carts_path , style:"color: black; text-decoration:none;"%>
-          </div>
-        </li>
+        <% if user_signed_in? && current_user.customer? %> 
+          <li class="nav-item">
+            <div class="nav-link">
+              <%= link_to 'Carts', carts_path , style:"color: black; text-decoration:none;"%>
+            </div>
+          </li>
+        <% end %>
 
         <% if user_signed_in? %>
           <li class="nav-item dropdown">
@@ -27,12 +29,16 @@
               <%= current_user.email %>
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li class="dropdown-item">
-              <%= link_to "Add Product", new_product_path, style:"color:black; text-decoration:none;"%>
-            </li>
-            <li class="dropdown-item">
-              <%= link_to "Collections", collections_path, style:"color:black; text-decoration:none;"%>
-            </li>
+            <% if current_user.seller? %>
+              <li class="dropdown-item">
+                <%= link_to "Add Product", new_product_path, style:"color:black; text-decoration:none;"%>
+              </li>
+            <% end %>
+            <% if current_user.customer? %>
+              <li class="dropdown-item">
+                <%= link_to "Collections", collections_path, style:"color:black; text-decoration:none;"%>
+              </li>
+            <% end %>
             <li class="dropdown-item">
               <%= link_to "Orders", orders_path, style:"color:black; text-decoration:none;"%>
             </li>
@@ -44,12 +50,12 @@
           </li>
         <% else %>
           <li class="nav-item navbar-button">
-            <button class="btn btn-dark" style="margin-right:2px;">
+            <button class="btn btn-dark" style="margin:0 5px;">
               <%= link_to "Sign Up", new_user_registration_path, style:"color: white; text-decoration:none;"%>
             </button>
           </li>
           <li class="nav-item">
-            <button class=" btn btn-dark" style="margin-right:2px;">
+            <button class=" btn btn-dark" style="margin:0 5px;">
               <%= link_to "Log In", new_user_session_path, style:"color: white; text-decoration:none;"%>
             </button
           </li>

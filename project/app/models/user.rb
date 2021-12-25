@@ -6,10 +6,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   enum role: [:customer, :seller]
-  has_many :products, foreign_key: "seller_id"
-  has_many :carts
+  has_many :products, dependent: :destroy, foreign_key: "seller_id"
+  has_many :carts, dependent: :destroy
   has_many :collections, dependent: :destroy
-  has_many :orders, foreign_key: "customer_id"
+  has_many :orders, dependent: :destroy, foreign_key: "customer_id"
 
   def set_default_role
     self.role ||= :customer
