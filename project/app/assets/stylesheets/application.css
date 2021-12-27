@@ -23,7 +23,7 @@ div.form {
     border-radius: 50px; 
     border-style: solid; 
     width:70%; 
-    margin-left:15%; 
+    margin: 10px auto; 
     padding:2%;
 }
 

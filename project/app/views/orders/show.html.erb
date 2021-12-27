@@ -50,7 +50,7 @@
       <div style="margin:10px;">
         <strong>
           Total : $
-          <%= productOrder.amount.to_s(:delimited) %>
+          <%= number_with_precision(productOrder.amount, precision: 2) %>
         </strong>
       </div>
     </div>
@@ -68,10 +68,17 @@
   <button style="background-color:black; width:45%; margin:2.4%; padding:3px; border-radius:10px;">
     <%= link_to 'Go Back', orders_path, style:'color:white; text-decoration:none;'  %>
   </button>
+  <% elsif current_user.customer? && @order.Delivering? %>
+    <button style="background-color:rgba(230, 19, 19, 0.829); width:45%; margin:2.4%; padding:3px; border-radius:10px; color:white;">
+      <%= link_to "Received", order_path(order: {order_id:@order.id, status: :Received}), method: :patch, style:'color:white; text-decoration:none;' %>
+    </button>
+    <button style="background-color:black; width:45%; margin:2.4%; padding:3px; border-radius:10px;">
+      <%= link_to 'Go Back', orders_path, style:'color:white; text-decoration:none;'  %>
+    </button>
   <% else %>
-  <button style="background-color:black; width:50%; margin:0 25%; padding:3px; border-radius:10px;">
-    <%= link_to 'Go Back', orders_path, style:'color:white; text-decoration:none;'  %>
-  </button>
+    <button style="background-color:black; width:50%; margin:0 25%; padding:3px; border-radius:10px;">
+      <%= link_to 'Go Back', orders_path, style:'color:white; text-decoration:none;'  %>
+    </button>
   <% end %>
 
 </div>

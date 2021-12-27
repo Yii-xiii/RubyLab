@@ -6,20 +6,35 @@
           <div class="order-details">  
             <div class="order-detail" style="font-weight: 1000; font-size:25px;">
               <a href="/orders/<%= order.id%>" style="text-decoration:none; color:navy;">
-              <%= order.customer.email %>
+               Order <%= order.id %>
+               <hr>
               </a>
             </div>
 
             <div class="order-detail" >
+              <strong> Customer's Name: </strong>
+              <%= order.name %>
+            </div>
+
+            <div class="order-detail" >
+              <strong> Address: </strong>
+              <br>
               <%= order.address %>
             </div>
 
             <div class="order-detail" >
+              <strong> Phone Number: </strong>
               <%= order.phone_number %>
             </div>
 
             <div class="order-detail" >
+              <strong> Postcode: </strong>
               <%= order.postcode %>
+            </div>
+
+            <div class="order-detail" >
+              <strong> Status: </strong>
+              <%= order.status %>
             </div>
           </div>
 
@@ -27,21 +42,27 @@
               <% if current_user.seller? %>
                 <% if order.Paid? %>
                   <button class="order-delivered">
-                    Delivered
+                    <%= link_to "Delivered", order_path(id:order.id,order: {order_id:order.id, status: :Delivering}), method: :patch, style:'color:white; text-decoration:none;' %>
                   </button>
-                
                 <% end %>
               <% end %>
 
               <% if order.customer_id == current_user.id %>
                 <% if order.Delivering? %>
                   <button class="order-delivered">
-                    Received
+                    <%= link_to "Received", order_path(id:order.id,order: {order_id:order.id, status: :Received}), method: :patch, style:'color:white; text-decoration:none;' %>
                   </button>
                 <% end %>
+                <% if order.Paid? %>
                 <button class="order-cancel">
-                  <%= link_to "Cancel Order", order_path(order), method: :delete, confirm:{message: "Are you sure ? "}, style:'color:white; text-decoration:none;' %>
+                  <%= link_to "Cancel Order", order_path(id:order.id,order: {order_id:order.id, status: :Cancelled}), confirm:{message:"Are you sure?"}, method: :patch, style:'color:white; text-decoration:none;' %>
                 </button>
+                <% end %>
+                <% if order.Cancelled? %>
+                <button class="order-cancel">
+                  <%= link_to "Delete Order", order_path(id:order.id), method: :delete, confirm:{message:"Are you sure?"}, style:'color:white; text-decoration:none;' %>
+                </button>
+                <% end %>
               <% end %>
           </div>
         </div>

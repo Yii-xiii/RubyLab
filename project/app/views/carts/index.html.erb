@@ -24,7 +24,7 @@
             </div>
 
             <div class="cart-detail" style="font-style:Italic; font-weight:500;">
-              $ <%= cart.product.price %>
+              $ <%= number_with_precision(cart.product.price, precision:2) %>
             </div>
 
 
@@ -53,7 +53,7 @@
           <div class="cart-right">
             <div style="margin-bottom:50%; width:100%;">
               <div style="font-size:20px; font-weight:600; font-style:Italic;">
-                $ <%= cart.amount %>
+                $ <%= number_with_precision(cart.amount, precision:2) %>
               </div>
             </div>
             <button type="button" class="delete">

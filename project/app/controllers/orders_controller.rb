@@ -49,6 +49,9 @@ class OrdersController < ApplicationController
           @productOrder.quantity = @item["quantity"]
           @productOrder.amount = @item["quantity"].to_i * @product.price
           @productOrder.save!
+
+          @product.sold += @item["quantity"].to_i
+          @product.save
         end
         format.html { redirect_to @order, notice: "Order was successfully created." }
         format.json { render :show, status: :created, location: @order }

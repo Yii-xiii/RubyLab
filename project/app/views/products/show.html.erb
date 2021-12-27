@@ -21,7 +21,7 @@
 
     <p>
       <strong style="font-size:18px;">Price: <br>$</strong>
-      <%= @product.price.to_s(:delimited) %>
+      <%= number_with_precision(@product.price, precision: 2) %>
     </p>
 
     <p>
@@ -83,6 +83,12 @@
       <div>
         <button class="product-edit">
           <%= link_to 'Edit Product', edit_product_path(@product), style:'text-decoration:none; color:white; margin:auto;' %> 
+        </button>
+      </div>
+
+      <div>
+        <button class="product-delete">
+          <%= link_to 'Delete Product', product_path(@product), method: :delete, data:{confirm: "Are you sure ? "}, style:'text-decoration:none; color:white; margin:auto;' %> 
         </button>
       </div>
     <% end %>

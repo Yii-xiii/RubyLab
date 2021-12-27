@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     @quantity = params[:quantity]
     if params[:commit] == "Buy Now" 
         @item = {quantity: @quantity, spec_id: params[:spec_id]}
-        redirect_to new_order_path(items: [@item, @item]) 
+        redirect_to new_order_path(items: [@item]) 
     elsif params[:commit] == "Add to Cart"
         @cart = current_user.carts.create({user_id: current_user.id, product_id: @product.id, quantity: @quantity, amount: ((@product.price) * @quantity.to_i), spec_id: params[:spec_id]})
         redirect_to product_path(@product), notice: "Added to cart successfully."

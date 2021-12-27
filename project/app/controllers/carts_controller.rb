@@ -72,7 +72,11 @@ class CartsController < ApplicationController
         @items += [{cart_id: cart.id, quantity: cart.quantity, spec_id: cart.spec_id}]
       end
     end
-    redirect_to new_order_path(items: @items)
+    if @items.length == 0
+      redirect_to carts_path, notice: "No product is selected."
+    else
+      redirect_to new_order_path(items: @items)
+    end
   end
 
   private

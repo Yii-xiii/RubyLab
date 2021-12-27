@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   
   get "products/do" => "products#do"
   get "carts/create_order"
-  
+  get "set_seller" => "application#set_seller"
+  get "set_customer" => "application#set_customer"
+
+
   resources :product_orders
   resources :orders
   resources :collections

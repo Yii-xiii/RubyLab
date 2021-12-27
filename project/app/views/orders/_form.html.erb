@@ -37,6 +37,7 @@
     <%= form.text_field :postcode %>
   </div>
 
+  <% @total = 0%>
   <% params[:items].each do |item, index| %>
   
   <input type="hidden" name="items[]" value=<%= item.to_json %> />
@@ -58,7 +59,8 @@
       <div style="margin:10px;">
       <strong>
         Total : $
-        <%= (item[:quantity].to_i * @product.price).to_s(:delimited) %>
+        <%= number_with_precision((item[:quantity].to_i * @product.price), precision: 2) %>
+        <% @total += item[:quantity].to_i * @product.price %>
         </strong>
       </div>
     </div>
@@ -71,7 +73,11 @@
   <% end %>
 
   <div class="actions">
-    <%= form.submit "Pay Now", style:'border-radius: 5px; height: 40px; width: 80%; margin-left: 10%; background-color:rgb(243, 92, 54);'  %>
+  <span style="font-size:20px; margin:8%; font-weight:600;">
+  <strong> To Pay: $ </strong>
+    <%= number_with_precision(@total, precision:2) %>
+    </span>
+    <%= form.submit "Pay Now", style:'border-radius: 5px; height: 40px; width: 50%; margin-left: 10%; background-color:rgb(243, 92, 54);'  %>
   </div>
 <% end %>
 </div>

@@ -15,7 +15,7 @@
 
 <p>
   <strong>Amount:</strong>
-  <%= @cart.amount %>
+  <%= number_with_precision(@cart.amount, precision:2) %>
 </p>
 
 <%= link_to 'Edit', edit_cart_path(@cart) %> |
