@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_23_140350) do
+ActiveRecord::Schema.define(version: 2021_12_27_083113) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -60,6 +60,19 @@ ActiveRecord::Schema.define(version: 2021_12_23_140350) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["product_id"], name: "index_collections_on_product_id"
     t.index ["user_id"], name: "index_collections_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.text "content"
+    t.integer "rating"
+    t.integer "product_order_id", null: false
+    t.integer "product_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_comments_on_product_id"
+    t.index ["product_order_id"], name: "index_comments_on_product_order_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -126,6 +139,9 @@ ActiveRecord::Schema.define(version: 2021_12_23_140350) do
   add_foreign_key "carts", "users"
   add_foreign_key "collections", "products"
   add_foreign_key "collections", "users"
+  add_foreign_key "comments", "product_orders"
+  add_foreign_key "comments", "products"
+  add_foreign_key "comments", "users"
   add_foreign_key "orders", "users", column: "customer_id"
   add_foreign_key "product_orders", "orders"
   add_foreign_key "product_orders", "products"

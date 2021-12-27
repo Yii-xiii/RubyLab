@@ -6,6 +6,7 @@ class Product < ApplicationRecord
     belongs_to :seller, class_name: "User"
     has_many :collections, dependent: :destroy
     has_many :productOrders, dependent: :destroy
+    has_many :comments, dependent: :destroy
 
     def set_default
         self.sold = 0

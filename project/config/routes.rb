@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   
+  resources :comments
   get "products/do" => "products#do"
   get "carts/create_order"
   get "set_seller" => "application#set_seller"

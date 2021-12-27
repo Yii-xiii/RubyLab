@@ -99,6 +99,16 @@
 
 <div style="width:85%; margin:auto;">
 <h1 class="header" style="">Comment</h1>
+<% if @product.comments.empty? %>
 <div style="background-color:gainsboro; border-radius:8px;padding:10px; margin:20px 0 100px 0;">
           No comment yet.
 <div>
+<% else %>
+  <% @product.comments.each do |comment| %>
+    <div style="background-color:gainsboro; border-radius:8px;padding:15px; margin:20px 0 100px 0;">
+    <strong> <%= comment.user.email %> </strong>
+    <hr>
+      <%= comment.content %>
+    </div>
+  <% end %>
+<% end %>

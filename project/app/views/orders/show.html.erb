@@ -36,27 +36,39 @@
     <% @productOrders = @order.productOrders.all %>
     <% @productOrders.each do |productOrder| %>
     <div class="order-product-box">
-    <div>
-      <%= image_tag(productOrder.product.image, :width =>150) %>
-    </div>
-    <div class="order-product-detail-box">
-      <div style="font-size:25px; font-family:serif; margin:3px; color:rgb(71, 64, 64);">
-        <strong> <%= productOrder.product.title %> </strong>
-        <hr style="width:80%; margin:0;">
+      <div>
+        <%= image_tag(productOrder.product.image, :width =>150) %>
       </div>
-      <div style="margin:10px;">
-        <%= productOrder.spec.title %>
+      <div class="order-product-detail-box">
+        <div style="font-size:25px; font-family:serif; margin:3px; color:rgb(71, 64, 64);">
+          <strong> <%= productOrder.product.title %> </strong>
+          <hr style="width:80%; margin:0;">
+        </div>
+        <div style="margin:10px;">
+          <%= productOrder.spec.title %>
+        </div>
+        <div style="margin:10px;">
+          <strong>
+            Total : $
+            <%= number_with_precision(productOrder.amount, precision: 2) %>
+          </strong>
+        </div>
       </div>
-      <div style="margin:10px;">
-        <strong>
-          Total : $
-          <%= number_with_precision(productOrder.amount, precision: 2) %>
-        </strong>
+
+      <div style="width:10%;">
+        <div class="order-product-quantity-box">
+          x <%= productOrder.quantity %>
+        </div>
+        <br>
+        <div>
+        <% if @order.Received? && productOrder.comment.nil? %>
+        <button class="order-delivered" style="width:100%;">
+          <%= link_to "Rate", new_comment_path({productOrder_id:productOrder.id}), style:'color:white; text-decoration:none;' %>
+        </button>
+        <% end %>
+        </div>
       </div>
-    </div>
-    <div class="order-product-quantity-box">
-      x <%= productOrder.quantity %>
-    </div>
+    
     </div>
     <% end %>
   </div>
