@@ -22,11 +22,15 @@ class CollectionsController < ApplicationController
 
   # POST /collections or /collections.json
   def create
+    if current_user.collections.includes(:product).where("product_id="+collection_params[:product_id]).length != 0
+      redirect_to product_path(collection_params[:product_id]), notice: "Product was added to collection successfully." 
+      return
+    end
     @collection = current_user.collections.new(collection_params)
 
     respond_to do |format|
       if @collection.save
-        format.html { redirect_to product_path(collection_params[:product_id]), notice: "Collection was successfully created." }
+        format.html { redirect_to product_path(collection_params[:product_id]), notice: "Product was added to collection successfully." }
         # format.json { render :show, status: :created, location: @collection }
       else
         format.html { render :new, status: :unprocessable_entity }

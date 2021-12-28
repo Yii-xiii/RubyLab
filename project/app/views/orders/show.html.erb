@@ -41,7 +41,7 @@
       </div>
       <div class="order-product-detail-box">
         <div style="font-size:25px; font-family:serif; margin:3px; color:rgb(71, 64, 64);">
-          <strong> <%= productOrder.product.title %> </strong>
+          <strong>  <%= link_to productOrder.product.title, product_path(productOrder.product), style:'color:rgb(71, 64, 64); text-decoration:none;' %> </strong>
           <hr style="width:80%; margin:0;">
         </div>
         <div style="margin:10px;">

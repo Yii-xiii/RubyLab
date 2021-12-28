@@ -10,7 +10,7 @@
 
           <div class="collection-details">
             <div class="collection-detail" style="font-weight: 1000; font-size:20px;">
-              <%= @product.title %>
+              <%= link_to @product.title, product_path(@product), style:'color:black; text-decoration:none;' %>
             </div>
         
             <div class="collection-detail" style="color:grey; font-style:Italic;">

@@ -46,9 +46,19 @@ class ProductsController < ApplicationController
         @item = {quantity: @quantity, spec_id: params[:spec_id]}
         redirect_to new_order_path(items: [@item]) 
     elsif params[:commit] == "Add to Cart"
+      @user = User.find(current_user.id)
+      puts @user.carts.includes(:spec).where("spec_id=" + params[:spec_id]).length
+      if @user.carts.includes(:spec).where("spec_id=" + params[:spec_id]).length != 0
+        @cart = @user.carts.includes(:spec).where("spec_id=" + params[:spec_id])[0]
+        @cart.quantity = @cart.quantity + params[:quantity].to_i
+        @cart.amount = @cart.quantity * @cart.product.price
+        @cart.save
+      else 
         @cart = current_user.carts.create({user_id: current_user.id, product_id: @product.id, quantity: @quantity, amount: ((@product.price) * @quantity.to_i), spec_id: params[:spec_id]})
-        redirect_to product_path(@product), notice: "Added to cart successfully."
-        # redirect_to carts_path(cart: {user_id: current_user.id, product_id: @product.id, quantity: @quantity, amount:((@product.price) * @quantity.to_i), spec: params[:spec]}), method: :post
+      end
+
+      redirect_to product_path(@product), notice: "Added to cart successfully."
+      # redirect_to carts_path(cart: {user_id: current_user.id, product_id: @product.id, quantity: @quantity, amount:((@product.price) * @quantity.to_i), spec: params[:spec]}), method: :post
     end
   end
 
