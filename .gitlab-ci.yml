@@ -13,8 +13,8 @@ test:
 deploy:
   stage: deploy
   script:
-    - pumactl stop -P ~/blog4/tmp/pids/server.pid || true
-    - rsync -arv --delete ./blog4 ~
+    - pumactl stop -P ~/project/tmp/pids/server.pid || true
+    - rsync -arv --delete ./project ~
     - cd ~/project
     - bundle install
     - rails db:migrate
